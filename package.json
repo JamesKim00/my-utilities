@@ -2,7 +2,6 @@
 	"name": "my-utilities",
 	"version": "0.0.1",
 	"private": true,
-	"prepare": "svelte-kit sync",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
@@ -34,6 +33,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@supabase/supabase-js": "^2.1.0"
+		"@supabase/supabase-js": "^2.1.0",
+		"node-fetch": "^3.3.0"
 	}
 }
