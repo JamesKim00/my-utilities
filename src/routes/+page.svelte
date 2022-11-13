@@ -7,16 +7,19 @@
 		const { data, error } = userResponse;
 		if (error) console.log('Error: ' + error);
 
+		console.log(JSON.stringify(data['user']));
 		if (!data['user']) goto('/auth');
-		else return JSON.stringify(data['user']);
+		else return data['user'];
 	}
 
 	const getUser = supabase.auth.getUser();
 </script>
 
+DO APPCHECK
 <div>Hello, there!</div>
 This is the main screen!!
 <a href="/auth">Authentication Screen</a>
+<a href="/pwds">Passwords Screen</a>
 {#await getUser}
 	<p>Waiting!</p>
 {:then userResponse}

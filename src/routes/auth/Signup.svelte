@@ -21,7 +21,7 @@
 		if (test('[^a-z0-9 ]', 'i')) messages.push('Need at least 1 special character');
 
 		try {
-			const pwd = <HTMLInputElement>document.getElementById('password');
+			const pwd = <HTMLInputElement>document.getElementById('pwd');
 			if (messages.length !== 0) pwd.setCustomValidity('Please meet all the requirements');
 			else pwd.setCustomValidity('');
 		} catch (e) {}
@@ -48,22 +48,29 @@
 		isLoading = false;
 		hasSubmitted = true;
 	}
+
+	function changeVisibility() {
+		const p = document.getElementById('pwd') as HTMLFormElement;
+		if (p.type === 'password') p.type = 'text';
+		else p.type = 'password';
+	}
 </script>
 
 <form on:submit|preventDefault={submit}>
 	<label for="name">Name: </label>
-	<input id="name" type="text" bind:value={info['name']} placeholder="Name" required />
+	<input type="text" bind:value={info['name']} placeholder="Name" required />
 	<label for="email">Email: </label>
-	<input id="email" type="email" bind:value={info['email']} placeholder="Email" required />
+	<input type="email" bind:value={info['email']} placeholder="Email" required />
 	<label for="password">Password: </label>
 	<input
-		id="password"
+		id="pwd"
 		type="password"
 		placeholder="Master Password"
 		required
 		bind:value={info['password']}
 		on:input={validate}
 	/>
+	<button on:click={changeVisibility} type="button">(show password)?</button>
 	<button type="submit">Submit</button>
 </form>
 <div>
