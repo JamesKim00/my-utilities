@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import supabase from '$lib/supabase';
-	import type { AuthChangeEvent, Session, UserResponse } from '@supabase/supabase-js';
+	// import { goto } from '$app/navigation';
+	// import { supabase } from '$lib/supabase';
+	// import type { AuthChangeEvent, Session, UserResponse } from '@supabase/supabase-js';
 	import Signin from './Signin.svelte';
 	import Signup from './Signup.svelte';
 
@@ -13,13 +13,13 @@
 		name: ''
 	};
 
-	supabase.auth.onAuthStateChange((authState: AuthChangeEvent, session: Session | null) => {
-		if (authState === 'SIGNED_IN') goto('/');
-	});
+	// supabase.auth.onAuthStateChange((authState: AuthChangeEvent, session: Session | null) => {
+	// 	if (authState === 'SIGNED_IN') goto('/');
+	// });
 </script>
 
 <a href="/">Go back to home?</a>
-
+aaaAA00!
 {#if isCreatingAccount}
 	<Signup {info} />
 {:else}

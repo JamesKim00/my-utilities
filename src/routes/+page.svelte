@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import supabase from '$lib/supabase';
+	import { signout } from '$lib/auth/authentication';
+	import { getUser } from '$lib/supabase';
 	import type { UserResponse } from '@supabase/supabase-js';
 
 	function checkUserResponse(userResponse: UserResponse) {
@@ -12,7 +13,7 @@
 		else return data['user'];
 	}
 
-	const getUser = supabase.auth.getUser();
+	const getUserHere = getUser();
 </script>
 
 DO APPCHECK
@@ -20,7 +21,8 @@ DO APPCHECK
 This is the main screen!!
 <a href="/auth">Authentication Screen</a>
 <a href="/pwds">Passwords Screen</a>
-{#await getUser}
+<button on:click={signout}>Signout</button>
+{#await getUserHere}
 	<p>Waiting!</p>
 {:then userResponse}
 	<p>{checkUserResponse(userResponse)}</p>

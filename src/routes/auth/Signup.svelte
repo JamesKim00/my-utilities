@@ -1,6 +1,6 @@
 <script lang="ts">
-	import supabase from '$lib/supabase';
-	export let info: { [key: string]: unknown };
+	import { signup } from '$lib/auth/authentication';
+	export let info: { name: string; email: string; password: string };
 
 	let messages: string[] = [];
 	let isLoading: boolean = false;
@@ -32,19 +32,19 @@
 
 	async function submit() {
 		isLoading = true;
-		const { data, error } = await supabase.auth.signUp({
-			email: info['email'] as string,
-			password: info['password'] as string,
-			options: {
-				data: {
-					name: info['name'] as string
-				}
-			}
-		});
+		await signup(info);
+		// const { data, error } = await supabase.auth.signUp({
+		// 	email: info['email'] as string,
+		// 	password: info['password'] as string,
+		// 	options: {
+		// 		data: {
+		// 			name: info['name'] as string
+		// 		}
+		// 	}
+		// });
+		// if (error) console.log(error);
 
-		if (error) console.log(error);
-
-		console.log(JSON.stringify(data));
+		// console.log(JSON.stringify(data));
 		isLoading = false;
 		hasSubmitted = true;
 	}

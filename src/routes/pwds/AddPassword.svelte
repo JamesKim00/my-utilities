@@ -1,21 +1,34 @@
 <script lang="ts">
-	const info: { email: string; password: string; description: string } = {
+	import { addPassword } from '$lib/pwds/passwords';
+
+	const info: { email: string; password: string; description: string; site: string } = {
 		email: '',
 		password: '',
-		description: ''
+		description: '',
+		site: ''
 	};
 
 	function changeVisibility() {
-		// const p = e.event.target as HTMLFormElement;
 		const p = document.getElementById('pwd') as HTMLFormElement;
-		if (p.type === 'password') p.type = 'text';
-		else p.type = 'password';
+		p.type === 'password' ? (p.type = 'text') : (p.type = 'password');
 	}
 
 	async function submit() {
-		alert(JSON.stringify(info));
+		// alert(JSON.stringify(info));
+		// try {
+		await addPassword(info);
+		// await getVaultKey();
+		// await addPassword(info);
+		// await addPassword(info);
+		// } catch (e) {
+		// alert(e);
+		// }
 	}
 </script>
+
+<svelte:head>
+	<script></script>
+</svelte:head>
 
 <p>Add password:</p>
 <form on:submit|preventDefault={submit}>
@@ -28,6 +41,9 @@
 
 	<label for="description">description: </label>
 	<input type="text" bind:value={info['description']} placeholder="description" required />
+
+	<label for="site">Site: (don't need to add https://, can leave empty)</label>
+	<input type="text" bind:value={info['site']} placeholder="google.com" />
 
 	<button type="submit">Submit</button>
 </form>

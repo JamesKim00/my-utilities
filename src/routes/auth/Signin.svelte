@@ -1,19 +1,21 @@
 <script lang="ts">
-	import supabase from '$lib/supabase';
-	export let info: { [key: string]: unknown };
+	import { signin } from '$lib/auth/authentication';
+	export let info: { email: string; password: string };
 
 	let isLoading: boolean = false;
 
 	async function submit() {
 		isLoading = true;
-		const { data, error } = await supabase.auth.signInWithPassword({
-			email: info['email'] as string,
-			password: info['password'] as string
-		});
+		await signin(info);
 
-		if (error) console.log(error);
+		// const { data, error } = await supabase.auth.signInWithPassword({
+		// 	email: info['email'] as string,
+		// 	password: info['password'] as string
+		// });
 
-		console.log(JSON.stringify(data));
+		// if (error) console.log(error);
+
+		// console.log(JSON.stringify(data));
 		isLoading = false;
 	}
 </script>
