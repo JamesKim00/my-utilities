@@ -1,13 +1,17 @@
 import { getUser, supabase } from '$lib/supabase';
+import argon2 from 'argon2-wasm-esm';
+// import * as argon2 from 'argon2-browser';
+// import init from 'argon2-browser.wasm?init';
+// import init from './argon2/argon2.wasm?init';
 
-let argon2: any;
-export const argon2Loaded = async (arg2: unknown) => (argon2 = arg2);
-export const argon2NotLoaded = () => !(argon2 ? true : false);
+// let argon2: any;
+// export const argon2Loaded = async (arg2: unknown) => (argon2 = arg2);
+// export const argon2NotLoaded = () => !(argon2 ? true : false);
 
 let vaultKey: CryptoKey | null = null;
 export async function getVaultKey(password: string = '') {
 	if (vaultKey) return vaultKey;
-	while (!argon2) await new Promise((r) => setTimeout(r, 50));
+	if (!argon2) await new Promise((resolve) => setTimeout(resolve, 500));
 
 	const user = (await getUser()).data.user;
 	const email = user?.email as string;

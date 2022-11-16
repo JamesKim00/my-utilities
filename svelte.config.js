@@ -3,7 +3,8 @@ import adapter from '@sveltejs/adapter-static';
 import preprocess from 'svelte-preprocess';
 
 // const prod = process.env.NODE_ENV === 'prod';
-const dev = 'production' === 'development';
+// const dev = 'production' === 'development';
+const dev = true;
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -20,6 +21,7 @@ const config = {
 			pages: 'docs',
 			assets: 'docs'
 		}),
+		trailingSlash: 'always',
 		paths: {
 			base: dev ? '' : '/my-utilities'
 		}
