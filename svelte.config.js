@@ -4,7 +4,8 @@ import preprocess from 'svelte-preprocess';
 
 // const prod = process.env.NODE_ENV === 'prod';
 // const dev = 'production' === 'development';
-const dev = false;
+// TODO change whenever deploying
+const dev = true;
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -19,11 +20,14 @@ const config = {
 	kit: {
 		adapter: adapter({
 			pages: 'docs',
-			assets: 'docs'
+			assets: 'docs',
+			fallback: null,
+			precompress: false
 		}),
 		trailingSlash: 'always',
 		paths: {
-			base: dev ? '' : '/my-utilities'
+			// base: dev ? '' : '/my-utilities'
+			base: '/my-utilities'
 		}
 		// target: '#svelte'
 	}
