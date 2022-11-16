@@ -1,5 +1,8 @@
-import adapter from '@sveltejs/adapter-auto';
+// import adapter from '@sveltejs/adapter-auto';
+import adapter from '@sveltejs/adapter-static';
 import preprocess from 'svelte-preprocess';
+
+const prod = process.env.NODE_ENV === 'prod';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -12,7 +15,17 @@ const config = {
 	],
 
 	kit: {
-		adapter: adapter()
+		adapter: adapter({
+			pages: 'docs',
+			assets: 'docs',
+			fallback: null,
+			precompress: false
+		}),
+		trailingSlash: 'always',
+		paths: {
+			// base: dev ? '' : '/my-utilities'
+			base: prod ? '/my-utilities' : ''
+		}
 	}
 };
 
