@@ -4,7 +4,7 @@ import preprocess from 'svelte-preprocess';
 
 // const prod = process.env.NODE_ENV === 'prod';
 // const dev = 'production' === 'development';
-const dev = true;
+const dev = false;
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {

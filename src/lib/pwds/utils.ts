@@ -1,12 +1,5 @@
 import { getUser, supabase } from '$lib/supabase';
 import argon2 from 'argon2-wasm-esm';
-// import * as argon2 from 'argon2-browser';
-// import init from 'argon2-browser.wasm?init';
-// import init from './argon2/argon2.wasm?init';
-
-// let argon2: any;
-// export const argon2Loaded = async (arg2: unknown) => (argon2 = arg2);
-// export const argon2NotLoaded = () => !(argon2 ? true : false);
 
 let vaultKey: CryptoKey | null = null;
 export async function getVaultKey(password: string = '') {

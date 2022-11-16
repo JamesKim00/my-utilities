@@ -15,27 +15,7 @@
 	}
 
 	const getUserHere = getUser();
-	// const loaded = async () => {
-	// 	// @ts-ignore
-	// 	const hashed = (
-	// 		await argon2.hash({
-	// 			pass: 'passwordYAY',
-	// 			salt: 'saltsalt',
-	// 			type: 2,
-	// 			hashLen: 16,
-	// 			time: 2,
-	// 			mem: 1024
-	// 		})
-	// 	).hashHex;
-	// 	console.log(hashed);
-
-	// 	// console.log(hashed);
-	// };
 </script>
-
-<svelte:head>
-	<!-- <script src="node_modules/argon2-browser/dist/argon2-bundled.min.js" on:load={loaded}></script> -->
-</svelte:head>
 
 DO APPCHECK
 <div>Hello, there!</div>
