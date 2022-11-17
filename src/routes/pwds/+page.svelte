@@ -1,5 +1,6 @@
 <script lang="ts">
 	// import { argon2Loaded, argon2NotLoaded } from '$lib/pwds/utils';
+	import Link from '../Link.svelte';
 	import AddPassword from './AddPassword.svelte';
 	import SeePasswords from './SeePasswords.svelte';
 
@@ -32,7 +33,7 @@
 	{/if} -->
 </svelte:head>
 
-<a href="/">Back to home</a>
+<Link to="/" />
 <h1>Passwords!</h1>
 <AddPassword />
 

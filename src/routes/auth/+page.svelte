@@ -1,13 +1,11 @@
 <script lang="ts">
-	// import { goto } from '$app/navigation';
-	// import { supabase } from '$lib/supabase';
-	// import type { AuthChangeEvent, Session, UserResponse } from '@supabase/supabase-js';
+	import Link from '../Link.svelte';
 	import Signin from './Signin.svelte';
 	import Signup from './Signup.svelte';
 
 	let isCreatingAccount: boolean = true;
 
-	let info: { [key: string]: any } = {
+	let info: { name: string; email: string; password: string } = {
 		email: '',
 		password: '',
 		name: ''
@@ -18,7 +16,7 @@
 	// });
 </script>
 
-<a href="/">Go back to home?</a>
+<Link to="/" />
 aaaAA00!
 {#if isCreatingAccount}
 	<Signup {info} />
