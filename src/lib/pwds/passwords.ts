@@ -47,17 +47,17 @@ export async function addPassword(info: any) {
 	// await decryptPassword(secretKey, iv, encrypted);
 }
 
-async function decryptPassword(secretKey: CryptoKey, iv: Uint8Array, encrypted: ArrayBuffer) {
-	const decrypted = await self.crypto.subtle.decrypt(
-		{ name: 'AES-GCM', iv: iv },
-		secretKey,
-		encrypted
-	);
-	const text = new TextDecoder().decode(decrypted);
+// async function decryptPassword(secretKey: CryptoKey, iv: Uint8Array, encrypted: ArrayBuffer) {
+// 	const decrypted = await self.crypto.subtle.decrypt(
+// 		{ name: 'AES-GCM', iv: iv },
+// 		secretKey,
+// 		encrypted
+// 	);
+// 	const text = new TextDecoder().decode(decrypted);
 
-	console.log(text);
-	alert(text);
-}
+// 	console.log(text);
+// 	alert(text);
+// }
 
 export async function seePasswords() {
 	const vaultKey: CryptoKey = await getVaultKey();

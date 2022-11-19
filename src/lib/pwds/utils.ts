@@ -4,7 +4,7 @@ import argon2 from 'argon2-wasm-esm';
 let vaultKey: CryptoKey | null = null;
 export async function getVaultKey(password: string = '') {
 	if (vaultKey) return vaultKey;
-	if (!argon2) await new Promise((resolve) => setTimeout(resolve, 500));
+	if (!argon2) await new Promise((resolve) => setTimeout(resolve, 100));
 
 	const user = (await getUser()).data.user;
 	const email = user?.email as string;

@@ -8,9 +8,7 @@
 
 	function checkUserResponse(userResponse: UserResponse) {
 		const { data, error } = userResponse;
-		if (error) console.log('Error: ' + error);
 
-		console.log(JSON.stringify(data['user']));
 		if (!data['user']) goto('/auth');
 		else return data['user'];
 	}

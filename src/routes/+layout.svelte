@@ -1,9 +1,15 @@
 <script lang="ts">
 	import '../app.css';
+	import { inFirstHalfOfTransition } from '$lib/loadingBars';
+	import Sample from './Loading.svelte';
+	import { fade } from 'svelte/transition';
 </script>
 
-<div class="grid place-items-center m-10">
-	<div class="rounded-lg overflow-hidden shadow-2xl p-6 items-start ">
-		<slot />
+{#if !$inFirstHalfOfTransition}
+	<div out:fade>
+		<div class="grid place-items-center m-10">
+			<slot />
+		</div>
 	</div>
-</div>
+{/if}
+<Sample />
