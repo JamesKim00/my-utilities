@@ -21,6 +21,7 @@ DO APPCHECK
 This is the main screen!!
 <Link to="/auth" />
 <Link to="/pwds" />
+<Link to="/algo/l_systems" />
 <button on:click={signout}>Signout</button>
 {#await getUserHere}
 	<p>Waiting!</p>

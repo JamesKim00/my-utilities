@@ -7,9 +7,9 @@
 
 {#if !$inFirstHalfOfTransition}
 	<div out:fade>
-		<div class="grid place-items-center m-10">
+		<!-- <div class="grid place-items-center m-10"> -->
 			<slot />
-		</div>
+		<!-- </div> -->
 	</div>
 {/if}
 <Sample />
