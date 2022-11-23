@@ -9,7 +9,7 @@
 	function checkUserResponse(userResponse: UserResponse) {
 		const { data, error } = userResponse;
 
-		if (!data['user']) goto('/auth');
+		if (!data['user']) goto('/my-utilities/auth');
 		else return data['user'];
 	}
 
