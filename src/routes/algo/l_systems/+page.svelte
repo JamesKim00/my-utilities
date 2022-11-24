@@ -1,115 +1,147 @@
-<script lang=ts>
-	import presets from "$lib/algo/l_systems/presets";
-	import { iterate, draw } from "$lib/algo/l_systems/rules";
-	import { onMount } from "svelte";
+<script lang="ts">
+	import presets from '$lib/algo/l_systems/presets';
+	import { iterate, draw, stopDrawing, isDrawing, speed } from '$lib/algo/l_systems/rules';
+	import { onMount } from 'svelte';
 
+	let canvas: HTMLCanvasElement;
+	let mounted: boolean = false;
 
-    let canvas: HTMLCanvasElement;
-    let loaded: boolean = false
+	let height: number = 800;
+	let width: number = 800;
 
+	let defaults: { [key: string]: number } = {
+		startingX: 100,
+		startingY: height / 2,
+		angle: 45,
+		length: 6,
+		iterationCount: 4
+	};
+	let info: { [key: string]: number } = JSON.parse(JSON.stringify(defaults));
 
-    let defaults: {[key: string]: number} = {
-        width: 700,
-        height: 700,
-        startingX: 0,
-        startingY: 350,
-        angle: 45,
-        length: 6,
-        iterationCount: 4
-    }
+	let axiom: string;
+	let rules: { [key: string]: string };
+	let actions: { [key: string]: Array<string> };
 
-    let info: {[key: string]: number} = JSON.parse(JSON.stringify(defaults))
+	let preset: string = 'binaryTree';
+	let options: Array<string> = Object.keys(presets);
 
-    let axiom: string
-    let rules:  { [key: string]: string }
-    let actions: { [key: string]: Array<string> }
+	function changePresetTo(choice: string) {
+		let c = presets[choice];
 
-    let preset: string = 'binaryTree'
-    let options: Array<string> = Object.keys(presets)
+		axiom = c['axiom'];
+		rules = c['rules'];
+		actions = c['actions'];
 
-    function changePresetTo(choice: string) {
-        let c = presets[choice]
+		defaults['angle'] = c['defaults']['angle'];
+		defaults['length'] = c['defaults']['length'];
+		defaults['iterationCount'] = c['defaults']['iterationCount'];
 
-        axiom = c['axiom']
-        rules = c['rules']
-        actions = c['actions']
+		info = JSON.parse(JSON.stringify(defaults));
+		generate();
+	}
+	$: changePresetTo(preset);
 
-        defaults['angle'] = c['defaults']['angle']
-        defaults['length'] = c['defaults']['length']
-        defaults['iterationCount'] = c['defaults']['iterationCount']
+	let iterating: boolean = false;
+	async function generate() {
+		if (!mounted) return;
+		if (isDrawing()) return stopDrawing.set(true);
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx.beginPath();
+		iterating = true;
+		const arrangement = await iterate(axiom, rules, info['iterationCount']);
+		iterating = false;
+		await draw({
+			arrangement: arrangement,
+			actions: actions,
+			ctx: ctx,
+			angle: info['angle'] * (Math.PI / 180),
+			startingX: info['startingX'],
+			startingY: info['startingY'],
+			length: info['length']
+		});
+	}
 
-        info = JSON.parse(JSON.stringify(defaults))
-        submit()
-    }
-    $: changePresetTo(preset)
+	stopDrawing.subscribe(async (s: boolean) => {
+		if (!s) await generate();
+	});
 
+	let ctx: CanvasRenderingContext2D;
+	onMount(() => {
+		ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+		mounted = true;
+		generate();
+	});
 
-    function generate() {
-        const arrangement = iterate(axiom, rules, info['iterationCount'])
-        draw({
-            arrangement: arrangement,
-            actions: actions,
-            ctx: ctx,
-            angle: info['angle'] * (Math.PI / 180),
-            startingX: info['startingX'],
-            startingY: info['startingY'],
-            length: info['length']
-        })
-    }
-    
-    let ctx: CanvasRenderingContext2D;
-    onMount(() => {
-        loaded = true
-        ctx = canvas.getContext("2d") as CanvasRenderingContext2D
-        generate()
-    })
-
-    function submit() {
-        if (!loaded) return
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.beginPath()
-        generate()
-    }
-
-    function getLabel(key: string): string {
-        if (key === 'startingX') return 'Starting Y: '
-        if (key === 'startingY') return 'Starting X: '
-        return key.charAt(0).toUpperCase() + key.slice(1) + ': '
-    }
-
-
-
+	let rotateDegrees: number = 0;
+	$: if (canvas) canvas.style.transform = `rotate(${rotateDegrees}deg)`;
 </script>
 
-<div class="flex flex-row w-full h-full">
-    <div class="m-auto">
-        <h1 class="text-center">Lindenmayer system</h1>
-        <div class="border-8 border-purple-400 p-8 -rotate-90 ">
-            <canvas bind:this={canvas} height={info['width']} width={info['height']} />
-        </div>
-    </div>
-        
-    <div class="w-1/5 bg-gray-400 h-screen p-2">
-        <h1>Choose a preset:</h1>
-            <select bind:value={preset}>
-                {#each options as value}<option {value}>{value}</option>{/each}
-            </select>
-        <hr />
+{#if iterating}
+	<div class="absolute left-1/2 top-1/2 translate-x-1" style="transform: translate(-50%,-50%);">
+		<div class="flex items-center justify-center space-x-2">
+			<div class="w-4 h-4 rounded-full animate-pulse dark:bg-violet-400" />
+			<div class="w-4 h-4 rounded-full animate-pulse dark:bg-violet-400" />
+			<div class="w-4 h-4 rounded-full animate-pulse dark:bg-violet-400" />
+		</div>
+	</div>
+{/if}
 
-        <form on:submit|preventDefault={submit}>
-            {#each Object.entries(info) as [key, value]}
-                <div class="py-2">
-                    <label for={key}>{getLabel(key)}</label>
-                    <br />
-                    <input id={key} type="number" bind:value={info[key]} required />
-                    <br />
-                    {#if value !== defaults[key]}
-                        <button on:click={() => info[key] = defaults[key]}>(toDefault?)</button>
-                    {/if}
-                </div>
-            {/each}
-            <hr />
-            <button type="submit">(Submit)</button>
-        </form>
-    </div>
+<div
+	class="flex flex-row w-full h-full"
+	style={iterating ? 'opacity: 0.5; pointer-events: none;' : ''}
+>
+	<div class="m-auto">
+		<div
+			class="border-8 border-purple-400 overflow-auto"
+			style={`height: ${window.innerHeight * 0.98}px; width: ${window.innerWidth * 0.75}px`}
+		>
+			<canvas bind:this={canvas} {height} {width} />
+		</div>
+	</div>
+
+	<div class="w-1/5 bg-gray-400 h-screen p-2">
+		<h1>Choose a preset:</h1>
+		<select bind:value={preset}>
+			{#each options as value}<option {value}>{value}</option>{/each}
+		</select>
+
+		<br />
+		<label for="rotate">Rotate:</label>
+		<br />
+		<input id="rotate" type="number" bind:value={rotateDegrees} />
+
+		<br />
+		<label for="height">Canvas Height: </label>
+		<br />
+		<input id="height" type="number" bind:value={height} on:input={generate} min="1" />
+
+		<br />
+		<label for="width">Canvas Width: </label>
+		<br />
+		<input id="width" type="number" bind:value={width} on:input={generate} min="1" />
+
+		<br />
+		<label for="speed">Speed: </label>
+		<br />
+		<input id="speed" type="number" bind:value={$speed} min="1" />
+
+		<div class="py-1" />
+		<hr />
+
+		<form on:submit|preventDefault={generate}>
+			{#each Object.entries(info) as [key, value]}
+				<div class="py-2">
+					<label for={key}>{key.charAt(0).toUpperCase() + key.slice(1) + ': '}</label>
+					<br />
+					<input id={key} type="number" bind:value={info[key]} required />
+					<br />
+					{#if value !== defaults[key]}
+						<button on:click={() => (info[key] = defaults[key])}>(toDefault?)</button>
+					{/if}
+				</div>
+			{/each}
+			<hr />
+			<button type="submit">(Submit)</button>
+		</form>
+	</div>
 </div>

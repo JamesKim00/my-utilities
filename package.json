@@ -37,6 +37,7 @@
 	"type": "module",
 	"dependencies": {
 		"@supabase/supabase-js": "^2.1.0",
-		"argon2-wasm-esm": "^1.0.3"
+		"argon2-wasm-esm": "^1.0.3",
+		"greenlet": "^1.1.0"
 	}
 }
