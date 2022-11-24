@@ -20,10 +20,10 @@ const config = {
 			assets: 'docs',
 			fallback: null,
 			precompress: false
-		})
+		}),
 
 		// adapter: vercel({})
-		// paths: { base: '/my-utilities' }
+		paths: { base: '/my-utilities' }
 	}
 };
 
