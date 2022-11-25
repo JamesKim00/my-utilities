@@ -1,6 +1,6 @@
 <script lang="ts">
-	import presets from '$lib/algo/l_systems/presets';
-	import { iterate, draw, stopDrawing, isDrawing, speed } from '$lib/algo/l_systems/rules';
+	import presets from '$lib/algo/l-systems/presets';
+	import { iterate, draw, stopDrawing, isDrawing, speed } from '$lib/algo/l-systems/rules';
 	import { onMount } from 'svelte';
 
 	let canvas: HTMLCanvasElement;

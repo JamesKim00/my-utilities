@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { loading, inFirstHalfOfTransition } from '$lib/loadingBars';
+	import { loading, inFirstHalfOfTransition, showBars } from '$lib/loadingBars';
 	import { afterUpdate } from 'svelte';
 	import { navigating } from '$app/stores';
 
@@ -7,7 +7,7 @@
 
 	const bars: HTMLDivElement[] = [];
 	let transitionIsLoading: boolean = false;
-	let showBars: boolean = false;
+	// let showBars: boolean = false;
 
 	const startTransition = async () => {
 		transitionIsLoading = true;
@@ -24,41 +24,35 @@
 	};
 
 	loading.subscribe(async (loading: boolean) => {
-		if (loading) showBars = true;
+		if (loading) showBars.set(true);
 		else {
-			if (transitionIsLoading || !showBars) return;
-
-			console.log(`Ending [subscribe] [Bars: ${showBars}] [Loading: ${loading}]`);
-			console.log('');
+			if (transitionIsLoading || !$showBars) return;
 			await startTransition();
-			showBars = false;
+			showBars.set(false);
 		}
 	});
 
 	afterUpdate(async () => {
-		if (transitionIsLoading || !showBars) return;
+		if (transitionIsLoading || !$showBars) return;
 
-		console.log(`Starting [update] [Bars: ${showBars}] [Loading: ${$loading}]`);
 		inFirstHalfOfTransition.set(true);
 		await startTransition();
 		inFirstHalfOfTransition.set(false);
 
 		if ($loading) return;
-		console.log(`Ending [update] [Bars: ${showBars}] [Loading: ${$loading}]`);
-		console.log('');
 		await startTransition();
-		showBars = false;
+		showBars.set(false);
 	});
 </script>
 
 <!-- class={`bar bg-green-200 box-content p-[1px] absolute h-1/5 inset-x-0 top-[${ -->
 
-{#if showBars}
-	<div class="h-screen w-screen absolute overflow-hidden top-0 ">
+{#if $showBars}
+	<div class="left-20 h-screen w-screen absolute overflow-hidden top-0 ">
 		{#each { length: 5 } as _, i}
 			<div
 				bind:this={bars[i]}
-				class={`bar bg-blue-400 box-content p-[1px] absolute h-1/5 w-full top-[${i * 20}%]`}
+				class={`bar bg-slate-800 box-content p-[1px] absolute h-1/5 w-full top-[${i * 20}%]`}
 			/>
 		{/each}
 	</div>
