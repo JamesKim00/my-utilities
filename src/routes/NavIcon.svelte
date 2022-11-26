@@ -7,14 +7,20 @@
 	if (link === 'home') link = '';
 	if (link === 'algo') link = 'algo/l-systems';
 
-	const getLink = (): string => {
-		if (link === '') return base;
-		return `${base}/${link}`;
-	};
+	let linkWithBase: string;
+	if (link === '') {
+		if (base) linkWithBase = base;
+		else linkWithBase = '/';
+	} else linkWithBase = `${base}/${link}`;
+
+	// const getLink = (): string => {
+	// 	if (link === '') return base;
+	// 	return `${base}/${link}`;
+	// };
 
 	let svg: SVGElement;
-	let isFocused: boolean = getLink() === $page.url.pathname;
-	page.subscribe((page) => (isFocused = getLink() === page.url.pathname));
+	let isFocused: boolean = linkWithBase === $page.url.pathname;
+	page.subscribe((page) => (isFocused = linkWithBase === page.url.pathname));
 
 	const focusColor: string = '#A8DADC';
 	const originalColor: string = '#004366';
@@ -22,7 +28,7 @@
 	const clickNavIcon = () => {
 		if (!isFocused) {
 			isFocused = true;
-			goto(getLink());
+			goto(linkWithBase);
 		}
 	};
 
