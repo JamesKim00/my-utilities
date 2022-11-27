@@ -13,17 +13,7 @@
 		p.type === 'password' ? (p.type = 'text') : (p.type = 'password');
 	}
 
-	async function submit() {
-		// alert(JSON.stringify(info));
-		// try {
-		await addPassword(info);
-		// await getVaultKey();
-		// await addPassword(info);
-		// await addPassword(info);
-		// } catch (e) {
-		// alert(e);
-		// }
-	}
+	const submit = async () => await addPassword(info);
 </script>
 
 <svelte:head>

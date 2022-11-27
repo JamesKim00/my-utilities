@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { base } from '$app/paths';
-	import { showBars } from '$lib/loadingBars';
-	import navIcons from '$lib/navIcons';
+	import { showBars } from '$lib/nav/loadingBars';
+	import navIcons from '$lib/nav/navIcons';
 	import NavIcon from './NavIcon.svelte';
 
 	const links: Array<string> = ['/auth', '/pwds', '/algo/l-systems'];
@@ -9,7 +9,7 @@
 </script>
 
 <nav
-	class="w-20 h-screen fixed bg-slate-900 shadow-md"
+	class="w-20 h-screen fixed bg-navbar shadow-md"
 	style={$showBars ? 'pointer-events: none' : ''}
 >
 	<div class="flex flex-col items-center pt-8">

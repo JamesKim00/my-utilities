@@ -1,11 +1,11 @@
-import { getUser, supabase } from '$lib/supabase';
+import { supabase } from '$lib/supabase';
 
 let vaultKey: CryptoKey | null = null;
 export async function getVaultKey(password: string = '') {
 	if (vaultKey) return vaultKey;
 	const argon2 = await import('argon2-wasm-esm');
 
-	const user = (await getUser()).data.user;
+	const user = (await supabase.auth.getUser()).data.user;
 	const email = user?.email as string;
 	while (!password) {
 		const response = prompt('Please enter your master password', 'Master Password');

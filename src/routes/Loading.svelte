@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { loading, inFirstHalfOfTransition, showBars } from '$lib/loadingBars';
+	import { loading, inFirstHalfOfTransition, showBars } from '$lib/nav/loadingBars';
 	import { afterUpdate } from 'svelte';
 	import { navigating } from '$app/stores';
 
@@ -45,10 +45,8 @@
 	});
 </script>
 
-<!-- class={`bar bg-green-200 box-content p-[1px] absolute h-1/5 inset-x-0 top-[${ -->
-
 {#if $showBars}
-	<div class="left-20 h-screen w-screen absolute overflow-hidden top-0 ">
+	<div class="left-20 h-screen absolute overflow-hidden top-0 right-0">
 		{#each { length: 5 } as _, i}
 			<div
 				bind:this={bars[i]}

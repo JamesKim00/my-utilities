@@ -1,17 +1,17 @@
 <script lang="ts">
-	import { signout } from '$lib/auth/authentication';
-	import { getUser } from '$lib/supabase';
-	import Link from './Link.svelte';
+	// import { signout } from '$lib/auth/authentication';
+	// import { supabase } from '$lib/supabase';
 
-	const getUserHere = getUser();
+	// const getUserHere = supabase.auth.getUser();
 </script>
 
-DO APPCHECK
+<div>
+	<div class="text-center text-5xl pt-14">Home Screen</div>
+</div>
+
+<!-- DO APPCHECK
 <div>Hello, there!</div>
 This is the main screen!!
-<Link to="/auth" />
-<Link to="/pwds" />
-<Link to="/algo/l-systems" />
 <button on:click={signout}>Signout</button>
 {#await getUserHere}
 	<p>Waiting!</p>
@@ -21,4 +21,4 @@ This is the main screen!!
 	{:else}
 		<h1>[No user data]</h1>
 	{/if}
-{/await}
+{/await} -->

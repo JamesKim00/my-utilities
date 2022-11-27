@@ -6,8 +6,8 @@
 	let canvas: HTMLCanvasElement;
 	let mounted: boolean = false;
 
-	let height: number = 800;
-	let width: number = 800;
+	let height: number = 1400;
+	let width: number = 1400;
 
 	let defaults: { [key: string]: number } = {
 		startingX: 100,
@@ -90,16 +90,13 @@
 	class="flex flex-row w-full h-full"
 	style={iterating ? 'opacity: 0.5; pointer-events: none;' : ''}
 >
-	<div class="m-auto">
-		<div
-			class="border-8 border-purple-400 overflow-auto"
-			style={`height: ${window.innerHeight * 0.98}px; width: ${window.innerWidth * 0.75}px`}
-		>
+	<div class="w-full h-full">
+		<div class="overflow-auto">
 			<canvas bind:this={canvas} {height} {width} />
 		</div>
 	</div>
 
-	<div class="w-1/5 bg-gray-400 h-screen p-2">
+	<div class="w-1/5 bg-gray-400 h-screen p-2 fixed right-0">
 		<h1>Choose a preset:</h1>
 		<select bind:value={preset}>
 			{#each options as value}<option {value}>{value}</option>{/each}

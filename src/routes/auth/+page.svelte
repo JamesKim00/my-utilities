@@ -1,9 +1,6 @@
 <script lang="ts">
-	import Link from '../Link.svelte';
 	import Signin from './Signin.svelte';
 	import Signup from './Signup.svelte';
-
-	let isCreatingAccount: boolean = true;
 
 	let info: { name: string; email: string; password: string } = {
 		email: '',
@@ -11,25 +8,28 @@
 		name: ''
 	};
 
-	// supabase.auth.onAuthStateChange((authState: AuthChangeEvent, session: Session | null) => {
-	// 	if (authState === 'SIGNED_IN') goto('/');
-	// });
+	let isCreatingAccount: boolean = true;
+	let title: string;
+	let changeText: string;
+	$: title = isCreatingAccount ? 'Make an account' : 'Login with an existing account';
+	$: changeText = isCreatingAccount ? 'Login instead' : 'Create an account instead';
 </script>
 
-<Link to="/" />
-aaaAA00!
+<div class="text-2xl">{title}</div>
+<div class="text-gray-500 mb-4">Please fill out the following fields:</div>
+
 {#if isCreatingAccount}
 	<Signup {info} />
 {:else}
 	<Signin {info} />
 {/if}
 
-<button
-	on:click={() => {
-		isCreatingAccount = !isCreatingAccount;
-	}}>Change button</button
+<div
+	class="border-2 border-black py-1 px-3 mt-6 max-w-fit text-sm cursor-pointer"
+	on:pointerup={() => (isCreatingAccount = !isCreatingAccount)}
 >
-<div />
+	{changeText + '   ❯'}
+</div>
 
 <!-- 
     Thanks for registering! Now you can check your email for verification.

@@ -1,38 +1,37 @@
 <script lang="ts">
 	import { signin } from '$lib/auth/authentication';
+	import Alert from '$lib/components/Alert.svelte';
+	import Button from '$lib/components/Button.svelte';
+	import Field from '$lib/components/Field.svelte';
 	export let info: { email: string; password: string };
 
 	let isLoading: boolean = false;
+	let showAlert: boolean = false;
+
+	let title: string;
+	let body: string;
 
 	async function submit() {
 		isLoading = true;
-		await signin(info);
-
-		// const { data, error } = await supabase.auth.signInWithPassword({
-		// 	email: info['email'] as string,
-		// 	password: info['password'] as string
-		// });
-
-		// if (error) console.log(error);
-
-		// console.log(JSON.stringify(data));
+		try {
+			const user = await signin(info);
+			title = `Hello ${user.user_metadata['name']}`;
+			body = 'Welcome back!';
+		} catch (e: any) {
+			title = 'Error';
+			body = e.message;
+		}
+		showAlert = false;
+		showAlert = true;
 		isLoading = false;
 	}
 </script>
 
 <form on:submit|preventDefault={submit}>
-	<label for="email">Email: </label>
-	<input id="email" type="email" bind:value={info['email']} placeholder="Email" required />
-	<label for="password">Password: </label>
-	<input
-		id="password"
-		type="password"
-		bind:value={info['password']}
-		placeholder="Master Password"
-		required
-	/>
-	<button type="submit">Submit</button>
+	<Field is="email" {info} />
+	<Field is="password" {info} />
+	<div class="h-3" />
+	<Button text="login" {isLoading} />
 </form>
-<p>
-	{'currently loading: ' + isLoading}
-</p>
+
+<Alert showIf={showAlert} {title} {body} />
