@@ -3,8 +3,6 @@
 	import SeePasswords from './SeePasswords.svelte';
 </script>
 
-<h1>Passwords!</h1>
 <AddPassword />
-
-<h1>See passwords:</h1>
+<div class="h-6" />
 <SeePasswords />

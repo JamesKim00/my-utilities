@@ -28,7 +28,7 @@
 	};
 </script>
 
-<div class="flex flex-row justify-between min-w-fit max-w-[17rem] pt-1 pr-1 relative">
+<div class="flex flex-row justify-between min-w-fit max-w-[19rem] pt-1 pr-1 relative">
 	{placeholder + ': '}
 	<input
 		id={is}

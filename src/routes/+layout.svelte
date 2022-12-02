@@ -6,7 +6,6 @@
 	import Navbar from './Navbar.svelte';
 </script>
 
-<Navbar />
 {#if !$inFirstHalfOfTransition}
 	<div out:fade>
 		<div class="font-mono text-base">
@@ -16,4 +15,5 @@
 		</div>
 	</div>
 {/if}
+<Navbar />
 <Loading />

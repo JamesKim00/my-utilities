@@ -1,4 +1,6 @@
 <script lang="ts">
+	import Button from '$lib/components/Button.svelte';
+	import Field from '$lib/components/Field.svelte';
 	import { addPassword } from '$lib/pwds/passwords';
 
 	const info: { email: string; password: string; description: string; site: string } = {
@@ -13,27 +15,24 @@
 		p.type === 'password' ? (p.type = 'text') : (p.type = 'password');
 	}
 
-	const submit = async () => await addPassword(info);
+	let isLoading: boolean = false;
+	const submit = async () => {
+		isLoading = true;
+		await addPassword(info);
+		isLoading = false;
+	};
 </script>
 
 <svelte:head>
 	<script></script>
 </svelte:head>
 
-<p>Add password:</p>
+<h1 class="text-2xl">Add a Password:</h1>
 <form on:submit|preventDefault={submit}>
-	<label for="email">Email: </label>
-	<input id="email" type="email" bind:value={info['email']} placeholder="Email" required />
-
-	<label for="password">Password: </label>
-	<input id="pwd" type="password" bind:value={info['password']} placeholder="Password" required />
-	<button on:click={changeVisibility} type="button">(show password)?</button>
-
-	<label for="description">description: </label>
-	<input type="text" bind:value={info['description']} placeholder="description" required />
-
-	<label for="site">Site: (don't need to add https://, can leave empty)</label>
-	<input type="text" bind:value={info['site']} placeholder="google.com" />
-
-	<button type="submit">Submit</button>
+	<Field is="email" {info} />
+	<Field is="password" {info} />
+	<Field is="description" {info} />
+	<Field is="site" {info} />
+	<div class="h-3" />
+	<Button text="Add Password" {isLoading} />
 </form>

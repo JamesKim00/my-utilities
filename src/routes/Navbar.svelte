@@ -9,7 +9,7 @@
 </script>
 
 <nav
-	class="w-20 h-screen fixed bg-navbar shadow-md"
+	class="w-20 h-screen fixed top-0 bg-navbar shadow-md"
 	style={$showBars ? 'pointer-events: none' : ''}
 >
 	<div class="flex flex-col items-center pt-8">
