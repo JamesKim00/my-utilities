@@ -1,6 +1,7 @@
 <script lang="ts">
+	import Link from '$lib/components/Link.svelte';
 </script>
 
-<div>
-	<div class="text-center text-5xl pt-14">AI Screen</div>
-</div>
+<div />
+<Link to="ai/doodle-recognition" text="Doodle recognition" />
+<Link to="ai/object-detection" text="Object Detection" />

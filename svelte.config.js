@@ -5,7 +5,7 @@ import preprocess from 'svelte-preprocess';
 const config = {
 	preprocess: [preprocess({ postcss: true })],
 	kit: {
-		paths: { base: '/my-utilities' },
+		// paths: { base: '/my-utilities' },
 		adapter: adapter({
 			pages: 'docs',
 			assets: 'docs',

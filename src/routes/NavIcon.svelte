@@ -1,16 +1,13 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { getLink, moveToLink } from '$lib/nav/links';
+	import { moveToLink, containsLink } from '$lib/nav/links';
 
 	export let link: string;
 	if (link === 'home') link = '';
-	if (link === 'algo') link = 'algo/l-systems';
-
-	let linkWithBase: string = getLink(link);
 
 	let svg: SVGElement;
-	let isFocused: boolean = linkWithBase === $page.url.pathname;
-	page.subscribe((page) => (isFocused = linkWithBase === page.url.pathname));
+	let isFocused: boolean = containsLink($page.url.pathname, link);
+	page.subscribe((page) => (isFocused = containsLink(page.url.pathname, link)));
 
 	const focusColor: string = '#A8DADC';
 	const originalColor: string = '#004366';

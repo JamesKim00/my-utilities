@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ClearButton from '$lib/components/ClearButton.svelte';
 	import Signin from './Signin.svelte';
 	import Signup from './Signup.svelte';
 
@@ -24,12 +25,14 @@
 	<Signin {info} />
 {/if}
 
-<div
+<!-- <div
 	class="border-2 border-black py-1 px-3 mt-6 max-w-fit text-sm cursor-pointer"
 	on:pointerup={() => (isCreatingAccount = !isCreatingAccount)}
 >
 	{changeText + '   ❯'}
-</div>
+</div> -->
+<div class="h-6" />
+<ClearButton click={() => (isCreatingAccount = !isCreatingAccount)} text={changeText + '   ❯'} />
 
 <!-- 
     Thanks for registering! Now you can check your email for verification.
