@@ -7,12 +7,8 @@
 </script>
 
 {#if !$inFirstHalfOfTransition}
-	<div out:fade>
-		<div class="font-mono text-base">
-			<div class="ml-20">
-				<slot />
-			</div>
-		</div>
+	<div out:fade class="font-mono text-base ml-20 relative">
+		<slot />
 	</div>
 {/if}
 <Navbar />

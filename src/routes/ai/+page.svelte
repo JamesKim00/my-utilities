@@ -4,4 +4,5 @@
 
 <div />
 <Link to="ai/doodle-recognition" text="Doodle recognition" />
-<Link to="ai/object-detection" text="Object Detection" />
+<Link to="ai/snake-game" text="Snake Game" />
+<Link to="ai/3d" text="3D" />
